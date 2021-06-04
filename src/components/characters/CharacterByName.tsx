@@ -2,19 +2,21 @@ import React, { useState } from 'react'
 import CharacterItem from './CharacterItem';
 import styles from './CharacterByName.module.css';
 import { getCharactersByName } from '../../services/trek-api';
+import {ListCharacter} from '../../types/types';
 
 
 const CharacterByName: React.FC = () => {
-  const [searchBy, setSearchBy] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [characters, setCharacters] = useState([])
+  const [searchBy, setSearchBy] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [characters, setCharacters] = useState<ListCharacter[]>([])
 
+  //must add type to event and tell it what to expect
   const handleChange = 
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchBy(e.target.value)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     getCharactersByName(searchBy)
       .then(fetchedCharacters => 
